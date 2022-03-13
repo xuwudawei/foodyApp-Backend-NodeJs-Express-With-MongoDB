@@ -1,0 +1,22 @@
+version: '3.8'
+services: 
+  database:
+    image: mongo
+    restart: always 
+    
+    volumes: 
+      - my_data:/data/db 
+  node-web:
+    build: 
+      context: ./node-web
+      dockerfile: Dockerfile
+    depends_on: 
+      - database
+    volumes: 
+      - /app/node_modules
+      - ./node-web:/app 
+    ports: 
+      - "5000:5000"
+  
+volumes: 
+  my_data: 
